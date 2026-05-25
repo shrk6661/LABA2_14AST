@@ -1,0 +1,331 @@
+﻿<Window x:Class="LABA2_14AST.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LABA2_14AST"
+        mc:Ignorable="d"
+        Title="Окно программы"
+        Height="750" 
+        Width="1000"
+        WindowStartupLocation="CenterScreen"
+        FontSize="12">
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="MinWidth" Value="100"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Padding" Value="3"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style TargetType="ProgressBar">
+            <Setter Property="Height" Value="5"/>
+            <Setter Property="Margin" Value="3,0,3,3"/>
+            <Setter Property="Maximum" Value="100"/>
+            <Setter Property="Foreground" Value="#4472C4"/>
+        </Style>
+    </Window.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <Grid Margin="15" Width="950">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                
+            </Grid.RowDefinitions>
+
+
+    
+            <Border Grid.Row="1" 
+                    Background="#F0F0F0" 
+                    CornerRadius="5" 
+                    Padding="8"
+                    Margin="0,0,0,8">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" 
+                           Content="Размер массива:" 
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"
+                           Padding="3"/>
+
+                    <TextBox Grid.Column="1" 
+                             Text="{Binding ArraySize, UpdateSourceTrigger=PropertyChanged}"
+                             VerticalAlignment="Center"
+                             MaxLength="5"
+                             Height="25"/>
+
+                    <Button Grid.Column="2" 
+                            Content="СГЕНЕРИРОВАТЬ"
+                            Command="{Binding GenerateArrayCommand}"
+                            Background="#4472C4"
+                            Foreground="White"
+                            FontWeight="Bold"
+                            Height="30"
+                            Width="130"/>
+                </Grid>
+            </Border>
+
+ 
+            <GroupBox Grid.Row="2" 
+                      Header="Исходный массив" 
+                      Margin="0,0,0,8">
+                <ScrollViewer MaxHeight="50" 
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Auto">
+                    <TextBlock Text="{Binding OriginalArrayString}" 
+                               TextWrapping="Wrap"
+                               FontFamily="Consolas"
+                               FontSize="11"
+                               Padding="3"/>
+                </ScrollViewer>
+            </GroupBox>
+
+
+            <Border Grid.Row="3" 
+                    Background="#F0F0F0" 
+                    CornerRadius="5" 
+                    Padding="8"
+                    Margin="0,0,0,8">
+                <WrapPanel HorizontalAlignment="Center">
+                    <Button Content="ПУЗЫРЬКОВАЯ"
+                            Command="{Binding BubbleSortCommand}"
+                            Background="#4472C4"
+                            Foreground="White"
+                            Width="110"
+                            Height="35">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding BubbleSortResult}" Value="Сортируется...">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <Button Content="БЫСТРАЯ"
+                            Command="{Binding QuickSortCommand}"
+                            Background="#4472C4"
+                            Foreground="White"
+                            Width="110"
+                            Height="35">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding QuickSortResult}" Value="Сортируется...">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <Button Content="ВСТАВКАМИ"
+                            Command="{Binding InsertionSortCommand}"
+                            Background="#4472C4"
+                            Foreground="White"
+                            Width="110"
+                            Height="35">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding InsertionSortResult}" Value="Сортируется...">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <Button Content="ПИРАМИДАЛЬНАЯ"
+                            Command="{Binding HeapSortCommand}"
+                            Background="#4472C4"
+                            Foreground="White"
+                            Width="110"
+                            Height="35">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HeapSortResult}" Value="Сортируется...">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </WrapPanel>
+            </Border>
+
+            <!-- Панель многопоточности и дополнительных функций -->
+            <Border Grid.Row="4" 
+                    Background="#F0F0F0" 
+                    CornerRadius="5" 
+                    Padding="8"
+                    Margin="0,0,0,8">
+                <StackPanel>
+                    <Grid Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" Content="Потоков:" FontWeight="Bold" VerticalAlignment="Center" Padding="3"/>
+
+                        <ComboBox Grid.Column="1" 
+                                  SelectedValue="{Binding SelectedThreadCount}"
+                                  SelectedValuePath="Content"
+                                  Width="60" 
+                                  Margin="3"
+                                  VerticalAlignment="Center"
+                                  Height="25">
+                            <ComboBoxItem Content="1"/>
+                            <ComboBoxItem Content="2" IsSelected="True"/>
+                            <ComboBoxItem Content="4"/>
+                            <ComboBoxItem Content="8"/>
+                        </ComboBox>
+                    </Grid>
+
+                    <WrapPanel HorizontalAlignment="Center" Margin="0,5">
+                        <Button Content="Многопоточная (копии)"
+                                Command="{Binding RunMultiThreadedSortCommand}"
+                                Background="#2E86C1"
+                                Foreground="White"
+                                Width="140"
+                                Height="30"/>
+
+                        <Button Content="Общий массив"
+                                Command="{Binding RunSharedArraySortCommand}"
+                                Background="#4472C4"
+                                Foreground="White"
+                                Width="140"
+                                Height="30"/>
+
+                        <Button Content="ПРЕРВАТЬ"
+                                Command="{Binding CancelAllCommand}"
+                                Background="#E74C3C"
+                                Foreground="White"
+                                FontWeight="Bold"
+                                Width="140"
+                                Height="30"/>
+                    </WrapPanel>
+
+                    <TextBlock Text="{Binding ExecutionTimeInfo}" 
+                               Margin="3" 
+                               FontWeight="Bold"
+                               Foreground="#2E86C1"
+                               HorizontalAlignment="Center"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Grid.Row="5" Margin="0,0,0,8">
+                <GroupBox Header="Пузырьковая сортировка (Bubble Sort) - O(n²)" Margin="0,0,0,5">
+                    <StackPanel>
+                        <ProgressBar Value="{Binding BubbleSortProgress}"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Auto"
+                                      MaxHeight="50">
+                            <TextBlock Text="{Binding BubbleSortResult}" 
+                                       TextWrapping="Wrap"
+                                       FontFamily="Consolas"
+                                       FontSize="11"
+                                       Padding="3"/>
+                        </ScrollViewer>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Быстрая сортировка (Quick Sort) - O(n log n)" Margin="0,0,0,5">
+                    <StackPanel>
+                        <ProgressBar Value="{Binding QuickSortProgress}"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Auto"
+                                      MaxHeight="50">
+                            <TextBlock Text="{Binding QuickSortResult}" 
+                                       TextWrapping="Wrap"
+                                       FontFamily="Consolas"
+                                       FontSize="11"
+                                       Padding="3"/>
+                        </ScrollViewer>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Сортировка вставками (Insertion Sort) - O(n²)" Margin="0,0,0,5">
+                    <StackPanel>
+                        <ProgressBar Value="{Binding InsertionSortProgress}"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Auto"
+                                      MaxHeight="50">
+                            <TextBlock Text="{Binding InsertionSortResult}" 
+                                       TextWrapping="Wrap"
+                                       FontFamily="Consolas"
+                                       FontSize="11"
+                                       Padding="3"/>
+                        </ScrollViewer>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Пирамидальная сортировка (Heap Sort) - O(n log n)" Margin="0,0,0,5">
+                    <StackPanel>
+                        <ProgressBar Value="{Binding HeapSortProgress}"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Auto"
+                                      MaxHeight="50">
+                            <TextBlock Text="{Binding HeapSortResult}" 
+                                       TextWrapping="Wrap"
+                                       FontFamily="Consolas"
+                                       FontSize="11"
+                                       Padding="3"/>
+                        </ScrollViewer>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+
+            <Border Grid.Row="6" 
+                    Background="#2F528F" 
+                    CornerRadius="5" 
+                    Padding="10">
+                <TextBlock Text="{Binding TotalComparisons}" 
+                           FontWeight="Bold" 
+                           FontSize="14"
+                           Foreground="White"
+                           HorizontalAlignment="Center"
+                           TextWrapping="Wrap"/>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</Window>
