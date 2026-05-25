@@ -8,7 +8,7 @@ namespace LABA2_14AST
         {
             InitializeComponent();
 
-            // Устанавливаем ViewModel как DataContext
+            
             DataContext = new MainViewModelThread();
         }
     }
